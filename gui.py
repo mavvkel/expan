@@ -102,6 +102,7 @@ class App(ctk.CTk):
         self.indicator_imgs.append(ctk.CTkImage(Image.open("static/icons/groceries_category_indicator.png"),
                                                 size=(18, 18)))
 
+        self.bind_keyboard_shortcuts()
 
 
     def bind_keyboard_shortcuts(self):
