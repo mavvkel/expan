@@ -93,9 +93,14 @@ class Dispenser:
     def get_processed(self):
         return pd.DataFrame(self.processed)
 
+
     def get_last_processed(self):
         if self.processed:
             return self.processed[-1]
         else:
             return None
+
+
+    def length(self):
+        return len(self.df.index)
 

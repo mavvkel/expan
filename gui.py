@@ -1,4 +1,6 @@
 import customtkinter as ctk
+from numpy import disp
+from pandas._libs.hashtable import mode
 from main import dispenser
 from typing import Optional, Union, Tuple
 from PIL import Image
@@ -69,23 +71,23 @@ class App(ctk.CTk):
         self.title_label = ctk.CTkLabel(master=self.current_frame)
         self.amount_label = ctk.CTkLabel(master=self.current_frame)
 
-        
+        self.load_progress_bar()
         self.load_category_buttons()
         self.load_cat_indicator_imgs()
+
         self.bind_keyboard_shortcuts()
 
         self.load_next()
 
 
     def bind_keyboard_shortcuts(self):
-
-
-        if len(App.categories) <= 11: # with more the seq concat will break
+        if len(App.categories) < 10: # with more the seq concat will break
             for i in range(len(App.categories)):
                 seq = '<Key-' + str(i + 1) + '>'
-                print(seq)
                 self.bind(seq, lambda _, category=i + 1:
                           self.load_next(category))
+        else:
+            raise NotImplementedError
 
 
     def load_category_buttons(self):
@@ -132,9 +134,26 @@ class App(ctk.CTk):
                                                     size=(ind_size, ind_size)))
 
 
+    def load_progress_bar(self):
+        self.progress_label = ctk.CTkLabel(master=self,
+                                           text='0 / ' + str(dispenser.length()))
+        self.progress_label.pack(pady=(0, 5))
+        self.progress_bar = ctk.CTkProgressBar(master=self,
+                                               width=500,
+                                               height=8,
+                                               fg_color='white',
+                                               progress_color='#0E95F6',
+                                               mode='determinate',
+                                               determinate_speed=50.0 / dispenser.length())
+        self.progress_bar.set(0.0)
+        self.progress_bar.pack(padx=25,
+                               pady=25)
+
+
     def save_current(self, category):
         if category != None:
             dispenser.assign_current(category=category)
+            self.progress_bar.step()
 
 
     def load_last_processed(self):
@@ -177,8 +196,9 @@ class App(ctk.CTk):
     def load_next(self, category = None):
         self.save_current(category)
 
-        row = None
         if dispenser.to_next():
+            self.progress_label.configure(text=str(dispenser.current_index + 1) + ' / ' + str(dispenser.length()))
+
             row = dispenser.current()
             self.date_label.configure(text=row['Data transakcji'])
             self.receiver_label.configure(text=row['Dane kontrahenta'])
@@ -191,7 +211,6 @@ class App(ctk.CTk):
                 self.amount_label.configure(text_color='green')
 
         else:
-            print('That\'s all')
             self.date_label.configure(text='----')
             self.receiver_label.configure(text='----')
             self.title_label.configure(text='----')
