@@ -9,6 +9,9 @@
    viewBox="0 0 26.763636 26.763636"
    sodipodi:docname="cat_indicator_template.svg"
    inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\dance_category_indicator.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -85,27 +88,30 @@
      showgrid="false"
      inkscape:zoom="37.992579"
      inkscape:cx="3.7507325"
-     inkscape:cy="13.634242"
+     inkscape:cy="13.700044"
      inkscape:window-width="3840"
      inkscape:window-height="2036"
      inkscape:window-x="-12"
      inkscape:window-y="-12"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g8" />
   <g
      inkscape:groupmode="layer"
      inkscape:label="Image"
      id="g8"
      sodipodi:insensitive="true">
     <circle
-       style="display:inline;fill:#2645b3;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       style="display:inline;fill:#dc8b50;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
        id="path4164"
        cx="13.382"
        cy="13.382"
        r="13.382"
-       inkscape:label="color" />
+       inkscape:label="color"
+       inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+       inkscape:export-xdpi="192"
+       inkscape:export-ydpi="192" />
     <circle
-       style="display:inline;fill:url(#radialGradient2257);fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       style="display:none;fill:url(#radialGradient2257);fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
        id="circle4264"
        cx="13.382"
        cy="13.382"

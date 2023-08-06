@@ -4,7 +4,6 @@ from dispenser import Dispenser
 from main import dispenser
 from typing import Optional, Union, Tuple
 from PIL import Image
-import pandas as pd
 
 
 class App(ctk.CTk):
@@ -19,13 +18,14 @@ class App(ctk.CTk):
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] = None, **kwargs):
         super().__init__(fg_color, **kwargs)
-        self.geometry(geometry_string="1700x1000+0+0")
+        self.geometry(geometry_string="1300x1000+0+0")
         self.title(string="Expan")
 
 
         # previous expenses frame
         self.frame = ctk.CTkScrollableFrame(master=self,
-                                            width=1200)
+                                            width=1200,
+                                            height=220)
         self.frame.grid_rowconfigure(index=0,
                                      weight=1)
         self.frame.grid_columnconfigure(index=0,
@@ -36,7 +36,7 @@ class App(ctk.CTk):
                                         weight=1)
         self.frame.grid_columnconfigure(index=3,
                                         weight=1)
-        self.frame.pack(padx=50,
+        self.frame.pack(padx=25,
                         pady=25)
 
 
@@ -90,6 +90,7 @@ class App(ctk.CTk):
                                  command=lambda: self.load_next(2))
         groceries_bt.pack(pady=10)
 
+
         self.load_next()
 
         
@@ -113,9 +114,9 @@ class App(ctk.CTk):
             date_label = ctk.CTkLabel(master=self.frame,
                                       text=last.loc['Data transakcji'])
             receiver_label = ctk.CTkLabel(master=self.frame,
-                                      text=last.loc['Dane kontrahenta'])
+                                      text=last.loc['Dane kontrahenta'][0:40])
             title_label = ctk.CTkLabel(master=self.frame,
-                                      text=last.loc['Tytuł'])
+                                      text=last.loc['Tytuł'][0:70])
             amount_label = ctk.CTkLabel(master=self.frame,
                                       text=last.loc['Kwota'])
             category_label = ctk.CTkLabel(master=self.frame,
@@ -123,13 +124,13 @@ class App(ctk.CTk):
                                           image=self.indicator_imgs[last.loc['category'] - 1])
             
 
-
             date_label.grid(column=0)
             this_row = date_label.grid_info()['row']
             receiver_label.grid(row=this_row, column=1)
             title_label.grid(row=this_row, column=2)
-            amount_label.grid(row=this_row, column=3)
+            amount_label.grid(row=this_row, column=3, padx=10)
             category_label.grid(row=this_row, column=4, padx=20)
+            
 
 
         # for i, row in dispenser.get_processed().iterrows():
@@ -170,10 +171,10 @@ class App(ctk.CTk):
         self.amount_label.grid(row=0, column=3)
 
         self.load_last_processed()
-        # for i, row in exps.iterrows():
-        #    #exp_labels.append(label);
-        #    #label.pack()
-    
+
+        self.frame.update_idletasks()
+        self.frame._parent_canvas.yview_moveto('1.0')
+
 
 app = App()
 app.mainloop()
