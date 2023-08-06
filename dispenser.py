@@ -95,11 +95,7 @@ class Dispenser:
 
     def get_last_processed(self):
         if self.processed:
-            last_processed = self.processed[-1].copy()
-            # print(type(last_processed))
-            # print(self.categories[-1])
-            
-            return last_processed
+            return self.processed[-1]
         else:
             return None
 

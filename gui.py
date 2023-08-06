@@ -1,8 +1,10 @@
+from operator import index
 import customtkinter as ctk
 from dispenser import Dispenser
 from main import dispenser
 from typing import Optional, Union, Tuple
 from PIL import Image
+import pandas as pd
 
 
 class App(ctk.CTk):
@@ -13,6 +15,7 @@ class App(ctk.CTk):
     title_label = None
     amount_label = None
     processed_labels = []
+    indicator_imgs = []
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] = None, **kwargs):
         super().__init__(fg_color, **kwargs)
@@ -26,13 +29,13 @@ class App(ctk.CTk):
         self.frame.grid_rowconfigure(index=0,
                                      weight=1)
         self.frame.grid_columnconfigure(index=0,
-                                        weight=0)
+                                        weight=1)
         self.frame.grid_columnconfigure(index=1,
-                                        weight=0)
+                                        weight=1)
         self.frame.grid_columnconfigure(index=2,
-                                        weight=0)
+                                        weight=1)
         self.frame.grid_columnconfigure(index=3,
-                                        weight=0)
+                                        weight=1)
         self.frame.pack(padx=50,
                         pady=25)
 
@@ -89,6 +92,14 @@ class App(ctk.CTk):
 
         self.load_next()
 
+        
+        # init indicator icon images
+        self.indicator_imgs.append(ctk.CTkImage(Image.open("static/icons/dance_category_indicator.png"),
+                                                size=(18, 18)))
+        self.indicator_imgs.append(ctk.CTkImage(Image.open("static/icons/groceries_category_indicator.png"),
+                                                size=(18, 18)))
+
+
 
     def save_current(self, category):
         if category != None:
@@ -108,7 +119,9 @@ class App(ctk.CTk):
             amount_label = ctk.CTkLabel(master=self.frame,
                                       text=last.loc['Kwota'])
             category_label = ctk.CTkLabel(master=self.frame,
-                                      text=last.loc['category'])
+                                          text='',
+                                          image=self.indicator_imgs[last.loc['category'] - 1])
+            
 
 
             date_label.grid(column=0)
@@ -116,7 +129,7 @@ class App(ctk.CTk):
             receiver_label.grid(row=this_row, column=1)
             title_label.grid(row=this_row, column=2)
             amount_label.grid(row=this_row, column=3)
-            category_label.grid(row=this_row, column=4)
+            category_label.grid(row=this_row, column=4, padx=20)
 
 
         # for i, row in dispenser.get_processed().iterrows():
