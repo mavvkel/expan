@@ -1,6 +1,5 @@
 from operator import index
 import customtkinter as ctk
-from dispenser import Dispenser
 from main import dispenser
 from typing import Optional, Union, Tuple
 from PIL import Image
@@ -20,7 +19,7 @@ class App(ctk.CTk):
         super().__init__(fg_color, **kwargs)
         self.geometry(geometry_string="1300x1000+0+0")
         self.title(string="Expan")
-
+        
 
         # previous expenses frame
         self.frame = ctk.CTkScrollableFrame(master=self,
@@ -103,6 +102,7 @@ class App(ctk.CTk):
                                                 size=(18, 18)))
 
         self.bind_keyboard_shortcuts()
+
 
 
     def bind_keyboard_shortcuts(self):
