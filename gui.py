@@ -1,12 +1,11 @@
 import customtkinter as ctk
-from numpy import disp
-from pandas._libs.hashtable import mode
 from main import dispenser
 from typing import Optional, Union, Tuple
 from PIL import Image
 
 
 class App(ctk.CTk):
+    # todo: refactor frame loading
     # todo: those should be instance vars
     current_frame = None
     frame = None
@@ -216,6 +215,8 @@ class App(ctk.CTk):
             self.title_label.configure(text='----')
             self.amount_label.configure(text='----')
             self.amount_label.configure(text_color='white')
+
+            dispenser.save_processed()
             
 
         self.date_label.grid(row=0, column=0)

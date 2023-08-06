@@ -1,3 +1,5 @@
+from operator import index
+from os import sep
 import pandas as pd
 import numpy as np
 
@@ -7,10 +9,12 @@ import numpy as np
 class Dispenser:
 
     def __init__(self, file):
+        self.file = file
         self.current_index = -1
         self.processed = []
 
 
+        # todo: error checking for fail on open
         # load expenses
         self.df = pd.read_csv(filepath_or_buffer=file,
                               sep=';',
@@ -19,9 +23,6 @@ class Dispenser:
                               on_bad_lines='skip',
                               usecols=range(0, 15))
         Dispenser.clean_df_from_ing(self.df)
-
-        # todelet self.categories = np.full(shape=len(self.df),
-        # todelet                           fill_value=np.NaN)
 
 
         # load first entry
@@ -71,14 +72,9 @@ class Dispenser:
 
     def assign_current(self, category):
         if self.current_index >= 0 and self.current_index < len(self.df):
-            # todelet self.categories[self.current_index] = category
             current = self.df.iloc[self.current_index].copy()
             current['category'] = category
             self.processed.append(current)
-            # print('dispenser:assign_current')
-            # print(self.processed)
-            # print('dispenser:assign_current')
-            # print(self.categories)
         else:
             raise ValueError('Assigning out of bounds')
 
@@ -104,3 +100,10 @@ class Dispenser:
     def length(self):
         return len(self.df.index)
 
+    def save_processed(self):
+        if self.processed:
+            out_file_path = 'out/' + self.file[0:-4] +  '_processed.csv'
+            pd.DataFrame(self.processed).to_csv(path_or_buf=out_file_path,
+                                                sep=';',
+                                                index=False)
+            # todo: check if saved properly
