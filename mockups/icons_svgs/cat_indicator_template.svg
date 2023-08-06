@@ -9,7 +9,7 @@
    viewBox="0 0 26.763636 26.763636"
    sodipodi:docname="cat_indicator_template.svg"
    inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
-   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\dance_category_indicator.png"
+   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\dance_cat_indicator.png"
    inkscape:export-xdpi="192"
    inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -87,29 +87,53 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:zoom="37.992579"
-     inkscape:cx="3.7507325"
-     inkscape:cy="13.700044"
+     inkscape:cx="3.7770534"
+     inkscape:cy="13.713204"
      inkscape:window-width="3840"
      inkscape:window-height="2036"
      inkscape:window-x="-12"
      inkscape:window-y="-12"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g8" />
+     inkscape:current-layer="g919" />
   <g
      inkscape:groupmode="layer"
      inkscape:label="Image"
      id="g8"
      sodipodi:insensitive="true">
-    <circle
-       style="display:inline;fill:#dc8b50;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
-       id="path4164"
-       cx="13.382"
-       cy="13.382"
-       r="13.382"
-       inkscape:label="color"
-       inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
-       inkscape:export-xdpi="192"
-       inkscape:export-ydpi="192" />
+    <g
+       id="g919"
+       inkscape:label="Colors">
+      <circle
+         style="display:none;fill:#dc8b50;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="path4164"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="orange -- groceries"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:inline;fill:#2645b3;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle921"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="dark blue -- dance"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:inline;fill:#e93b3b;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle1175"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="red -- eating out"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+    </g>
     <circle
        style="display:none;fill:url(#radialGradient2257);fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
        id="circle4264"
@@ -119,7 +143,7 @@
        inkscape:label="shadow"
        sodipodi:insensitive="true" />
     <ellipse
-       style="fill:url(#linearGradient4638);fill-opacity:1;stroke:none;stroke-width:6.50828;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       style="display:inline;fill:url(#linearGradient4638);fill-opacity:1;stroke:none;stroke-width:6.50828;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
        id="path4520"
        cx="13.381818"
        cy="10.883704"
@@ -129,23 +153,7 @@
        sodipodi:insensitive="true" />
   </g>
   <g
-     inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="HELPERS"
-     style="display:inline">
-    <rect
-       style="fill:#2645b3;fill-opacity:1;stroke-width:6.40254;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
-       id="rect2984"
-       width="5"
-       height="2"
-       x="-11.081"
-       y="0" />
-    <rect
-       style="fill:#dc8b50;fill-opacity:1;stroke-width:6.40254;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
-       id="rect3066"
-       width="5"
-       height="2"
-       x="-11.081"
-       y="2" />
-  </g>
+     style="display:inline" />
 </svg>

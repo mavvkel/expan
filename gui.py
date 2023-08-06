@@ -1,4 +1,3 @@
-from operator import index
 import customtkinter as ctk
 from main import dispenser
 from typing import Optional, Union, Tuple
@@ -6,6 +5,7 @@ from PIL import Image
 
 
 class App(ctk.CTk):
+    # todo: those should be instance vars
     current_frame = None
     frame = None
     date_label = None
@@ -14,17 +14,21 @@ class App(ctk.CTk):
     amount_label = None
     processed_labels = []
     indicator_imgs = []
+    categories = ['dance', 'groceries', 'eatout']
+
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] = None, **kwargs):
         super().__init__(fg_color, **kwargs)
         self.geometry(geometry_string="1300x1000+0+0")
         self.title(string="Expan")
+        self.configure(fg_color='#34343D')
         
 
         # previous expenses frame
         self.frame = ctk.CTkScrollableFrame(master=self,
                                             width=1200,
-                                            height=220)
+                                            height=220,
+                                            fg_color='#2A2A32')
         self.frame.grid_rowconfigure(index=0,
                                      weight=1)
         self.frame.grid_columnconfigure(index=0,
@@ -42,7 +46,8 @@ class App(ctk.CTk):
         # current expense frame
         self.current_frame = ctk.CTkFrame(master=self,
                                           width=1220,
-                                          height=100)
+                                          height=100,
+                                          fg_color='#2A2A32')
         self.current_frame.grid_rowconfigure(index=0,
                                              weight=1)
         self.current_frame.grid_columnconfigure(index=0,
@@ -53,8 +58,8 @@ class App(ctk.CTk):
                                                 weight=1)
         self.current_frame.grid_columnconfigure(index=3,
                                                 weight=1)
-        self.current_frame.pack(padx=50,
-                                pady=25)
+        self.current_frame.pack(padx=25,
+                                pady=(0, 25))
         self.current_frame.grid_propagate(False)
 
 
@@ -65,51 +70,66 @@ class App(ctk.CTk):
         self.amount_label = ctk.CTkLabel(master=self.current_frame)
 
         
-        # category buttons
-        dance_image = ctk.CTkImage(Image.open("static/icons/dance_button.png"),
-                                   size=(70, 70))
-        dance_bt = ctk.CTkButton(master=self,
-                                 image=dance_image,
-                                 width=0,
-                                 height=0,
-                                 fg_color="transparent",
-                                 text="",
-                                 hover=False,
-                                 command=lambda category=1:
-                                     self.load_next(category))
-        dance_bt.pack()
-        groceries_image = ctk.CTkImage(Image.open("static/icons/groceries_button.png"),
-                                       size=(70, 70))
-        groceries_bt = ctk.CTkButton(master=self,
-                                 image=groceries_image,
-                                 width=0,
-                                 height=0,
-                                 fg_color="transparent",
-                                 text="",
-                                 hover=False,
-                                 command=lambda category=2:
-                                     self.load_next(category))
-        groceries_bt.pack(pady=10)
-
+        self.load_category_buttons()
+        self.load_cat_indicator_imgs()
+        self.bind_keyboard_shortcuts()
 
         self.load_next()
 
-        
-        # init indicator icon images
-        self.indicator_imgs.append(ctk.CTkImage(Image.open("static/icons/dance_category_indicator.png"),
-                                                size=(18, 18)))
-        self.indicator_imgs.append(ctk.CTkImage(Image.open("static/icons/groceries_category_indicator.png"),
-                                                size=(18, 18)))
-
-        self.bind_keyboard_shortcuts()
-
-
 
     def bind_keyboard_shortcuts(self):
-        self.bind('<Key-1>', lambda _, category=1:
-                  self.load_next(category))
-        self.bind('<Key-2>', lambda _, category=2:
-                  self.load_next(category))
+
+
+        if len(App.categories) <= 11: # with more the seq concat will break
+            for i in range(len(App.categories)):
+                seq = '<Key-' + str(i + 1) + '>'
+                print(seq)
+                self.bind(seq, lambda _, category=i + 1:
+                          self.load_next(category))
+
+
+    def load_category_buttons(self):
+        bt_size = 70
+
+        # setup category frame & its grid
+        self.cat_frame = ctk.CTkFrame(master=self,
+                                      width=1220,
+                                      height=1*bt_size + 20,
+                                      fg_color='#2A2A32')
+        self.cat_frame.grid_rowconfigure(index=0,
+                                         weight=1)
+        for col in range(len(App.categories)):
+            self.cat_frame.grid_columnconfigure(index=col,
+                                                weight=1)
+        self.cat_frame.pack(padx=25,
+                            pady=25)
+        self.cat_frame.grid_propagate(False)
+
+
+        # load images and their buttons
+        for i, name in enumerate(App.categories):
+            bt_path = 'static/icons/' + name + '_button.png'
+            bt_img = ctk.CTkImage(Image.open(bt_path),
+                                     size=(bt_size, bt_size))
+            bt = ctk.CTkButton(master=self.cat_frame,
+                               image=bt_img,
+                               width=0,
+                               height=0,
+                               fg_color="transparent",
+                               text="",
+                               hover=False,
+                               command=lambda category=i + 1:
+                               self.load_next(category))
+            bt.grid(column=i, row=0)
+
+
+    def load_cat_indicator_imgs(self):
+        ind_size = 18
+
+        for name in App.categories:
+            ind_path = 'static/icons/' + name + '_cat_indicator.png'
+            self.indicator_imgs.append(ctk.CTkImage(Image.open(ind_path),
+                                                    size=(ind_size, ind_size)))
 
 
     def save_current(self, category):
@@ -193,13 +213,3 @@ class App(ctk.CTk):
 app = App()
 app.mainloop()
 
-
-"""
-
-1. load_next to the current frame
-2. click category button
-3. save the category
-4. load the saved expense and its category to the processed frame
-5. load_next to the current frame
-
-"""
