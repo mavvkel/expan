@@ -76,7 +76,8 @@ class App(ctk.CTk):
                                  fg_color="transparent",
                                  text="",
                                  hover=False,
-                                 command=lambda: self.load_next(1))
+                                 command=lambda category=1:
+                                     self.load_next(category))
         dance_bt.pack()
         groceries_image = ctk.CTkImage(Image.open("static/icons/groceries_button.png"),
                                        size=(70, 70))
@@ -87,7 +88,8 @@ class App(ctk.CTk):
                                  fg_color="transparent",
                                  text="",
                                  hover=False,
-                                 command=lambda: self.load_next(2))
+                                 command=lambda category=2:
+                                     self.load_next(category))
         groceries_bt.pack(pady=10)
 
 
@@ -100,6 +102,13 @@ class App(ctk.CTk):
         self.indicator_imgs.append(ctk.CTkImage(Image.open("static/icons/groceries_category_indicator.png"),
                                                 size=(18, 18)))
 
+
+
+    def bind_keyboard_shortcuts(self):
+        self.bind('<Key-1>', lambda _, category=1:
+                  self.load_next(category))
+        self.bind('<Key-2>', lambda _, category=2:
+                  self.load_next(category))
 
 
     def save_current(self, category):
