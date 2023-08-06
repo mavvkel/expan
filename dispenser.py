@@ -2,10 +2,14 @@ import pandas as pd
 import numpy as np
 
 
+"""
+"""
 class Dispenser:
 
     def __init__(self, file):
         self.current_index = -1
+        self.processed = []
+
 
         # load expenses
         self.df = pd.read_csv(filepath_or_buffer=file,
@@ -16,8 +20,8 @@ class Dispenser:
                               usecols=range(0, 15))
         Dispenser.clean_df_from_ing(self.df)
 
-        self.categories = np.full(shape=len(self.df),
-                                  fill_value=np.NaN)
+        # todelet self.categories = np.full(shape=len(self.df),
+        # todelet                           fill_value=np.NaN)
 
 
         # load first entry
@@ -66,10 +70,17 @@ class Dispenser:
 
 
     def assign_current(self, category):
-        if self.current_index == -1:
-            raise ValueError('Assigning out of bounds')
+        if self.current_index >= 0 and self.current_index < len(self.df):
+            # todelet self.categories[self.current_index] = category
+            current = self.df.iloc[self.current_index].copy()
+            current['category'] = category
+            self.processed.append(current)
+            # print('dispenser:assign_current')
+            # print(self.processed)
+            # print('dispenser:assign_current')
+            # print(self.categories)
         else:
-            self.categories[self.current_index] = category
+            raise ValueError('Assigning out of bounds')
 
 
     def current(self):
@@ -78,4 +89,17 @@ class Dispenser:
         elif self.current_index >= len(self.df):
             return np.empty
 
+    
+    def get_processed(self):
+        return pd.DataFrame(self.processed)
+
+    def get_last_processed(self):
+        if self.processed:
+            last_processed = self.processed[-1].copy()
+            # print(type(last_processed))
+            # print(self.categories[-1])
+            
+            return last_processed
+        else:
+            return None
 

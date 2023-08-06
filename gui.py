@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from dispenser import Dispenser
 from main import dispenser
 from typing import Optional, Union, Tuple
 from PIL import Image
@@ -11,6 +12,7 @@ class App(ctk.CTk):
     receiver_label = None
     title_label = None
     amount_label = None
+    processed_labels = []
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] = None, **kwargs):
         super().__init__(fg_color, **kwargs)
@@ -93,6 +95,37 @@ class App(ctk.CTk):
             dispenser.assign_current(category=category)
 
 
+    def load_last_processed(self):
+        last = dispenser.get_last_processed()
+
+        if last is not None:
+            date_label = ctk.CTkLabel(master=self.frame,
+                                      text=last.loc['Data transakcji'])
+            receiver_label = ctk.CTkLabel(master=self.frame,
+                                      text=last.loc['Dane kontrahenta'])
+            title_label = ctk.CTkLabel(master=self.frame,
+                                      text=last.loc['Tytuł'])
+            amount_label = ctk.CTkLabel(master=self.frame,
+                                      text=last.loc['Kwota'])
+            category_label = ctk.CTkLabel(master=self.frame,
+                                      text=last.loc['category'])
+
+
+            date_label.grid(column=0)
+            this_row = date_label.grid_info()['row']
+            receiver_label.grid(row=this_row, column=1)
+            title_label.grid(row=this_row, column=2)
+            amount_label.grid(row=this_row, column=3)
+            category_label.grid(row=this_row, column=4)
+
+
+        # for i, row in dispenser.get_processed().iterrows():
+        #     self.processed_labels.append(label)
+        #     print(i)
+        #     print(self.processed_labels)
+        #     self.processed_labels[i].grid(row=i, column=0)
+
+
     def load_next(self, category = None):
         self.save_current(category)
 
@@ -122,10 +155,11 @@ class App(ctk.CTk):
         self.receiver_label.grid(row=0, column=1)
         self.title_label.grid(row=0, column=2)
         self.amount_label.grid(row=0, column=3)
+
+        self.load_last_processed()
         # for i, row in exps.iterrows():
         #    #exp_labels.append(label);
         #    #label.pack()
-
     
 
 app = App()
