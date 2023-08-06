@@ -123,6 +123,10 @@ class App(ctk.CTk):
                                           text='',
                                           image=self.indicator_imgs[last.loc['category'] - 1])
             
+            if last.loc['Kwota'].startswith('-'):
+                amount_label.configure(text_color='red')
+            else:
+                amount_label.configure(text_color='green')
 
             date_label.grid(column=0)
             this_row = date_label.grid_info()['row']
