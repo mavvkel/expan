@@ -9,7 +9,7 @@
    viewBox="0 0 26.763636 26.763636"
    sodipodi:docname="cat_indicator_template.svg"
    inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
-   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\dance_cat_indicator.png"
+   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\eatout_cat_indicator.png"
    inkscape:export-xdpi="192"
    inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -104,7 +104,7 @@
        id="g919"
        inkscape:label="Colors">
       <circle
-         style="display:none;fill:#dc8b50;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         style="display:inline;fill:#dc8b50;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
          id="path4164"
          cx="13.382"
          cy="13.382"

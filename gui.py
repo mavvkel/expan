@@ -1,7 +1,9 @@
+from typing import Optional, Tuple, Union
+
 import customtkinter as ctk
-from main import dispenser
-from typing import Optional, Union, Tuple
 from PIL import Image
+
+from main import dispenser
 
 
 class App(ctk.CTk):
@@ -18,7 +20,8 @@ class App(ctk.CTk):
     categories = ['dance', 'groceries', 'eatout']
 
 
-    def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] = None, **kwargs):
+    def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] =
+                 None, **kwargs):
         super().__init__(fg_color, **kwargs)
         self.geometry(geometry_string="1300x1000+0+0")
         self.title(string="Expan")
@@ -143,14 +146,15 @@ class App(ctk.CTk):
                                                fg_color='white',
                                                progress_color='#0E95F6',
                                                mode='determinate',
-                                               determinate_speed=50.0 / dispenser.length())
+                                               determinate_speed=50.0 /
+                                               dispenser.length())
         self.progress_bar.set(0.0)
         self.progress_bar.pack(padx=25,
                                pady=25)
 
 
     def save_current(self, category):
-        if category != None:
+        if category is not None:
             dispenser.assign_current(category=category)
             self.progress_bar.step()
 
@@ -169,7 +173,8 @@ class App(ctk.CTk):
                                       text=last.loc['Kwota'])
             category_label = ctk.CTkLabel(master=self.frame,
                                           text='',
-                                          image=self.indicator_imgs[last.loc['category'] - 1])
+                                          image=self.indicator_imgs[
+                                              last.loc['category'] - 1])
             
             if last.loc['Kwota'].startswith('-'):
                 amount_label.configure(text_color='red')
@@ -196,7 +201,8 @@ class App(ctk.CTk):
         self.save_current(category)
 
         if dispenser.to_next():
-            self.progress_label.configure(text=str(dispenser.current_index + 1) + ' / ' + str(dispenser.length()))
+            self.progress_label.configure(text=str(dispenser.current_index + 1) 
+                                          + ' / ' + str(dispenser.length()))
 
             row = dispenser.current()
             self.date_label.configure(text=row['Data transakcji'])

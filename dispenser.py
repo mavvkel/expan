@@ -1,5 +1,3 @@
-from operator import index
-from os import sep
 import pandas as pd
 import numpy as np
 
@@ -53,12 +51,17 @@ class Dispenser:
 
 
         # compress 3 money columns into 1
-        exps['Kwota'] = np.where(exps['Szczegóły'].isna() | exps['Szczegóły'].str.isspace(),
-                                 exps['Kwota transakcji (waluta rachunku)'], exps['Szczegóły'])
-        exps['Kwota'] = np.where(exps['Kwota'].isnull(), exps['Kwota blokady/zwolnienie blokady'],
+        exps['Kwota'] = np.where(exps['Szczegóły'].isna() | 
+                                 exps['Szczegóły'].str.isspace(),
+                                 exps['Kwota transakcji (waluta rachunku)'],
+                                 exps['Szczegóły'])
+        exps['Kwota'] = np.where(exps['Kwota'].isnull(),
+                                 exps['Kwota blokady/zwolnienie blokady'],
                                  exps['Kwota'])
-        exps = exps.drop(columns=['Szczegóły', 'Kwota transakcji (waluta rachunku)',
-                                  'Kwota blokady/zwolnienie blokady', 'Saldo po transakcji'],
+        exps = exps.drop(columns=['Szczegóły',
+                                  'Kwota transakcji (waluta rachunku)',
+                                  'Kwota blokady/zwolnienie blokady',
+                                  'Saldo po transakcji'],
                          inplace=True)
 
 
