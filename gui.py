@@ -1,3 +1,4 @@
+from tkinter.font import ITALIC
 from typing import Optional, Tuple, Union
 
 import customtkinter as ctk
@@ -33,6 +34,7 @@ class App(ctk.CTk):
                  None, **kwargs):
         super().__init__(fg_color, **kwargs)
         self.geometry(geometry_string="1300x1000+0+0")
+        self.minsize(1220, 800)
         self.title(string="Expan")
         self.configure(fg_color='#34343D')
         
@@ -103,14 +105,18 @@ class App(ctk.CTk):
 
     def load_category_buttons(self):
         bt_size = 70
+        font = ctk.CTkFont()
+        font.configure(slant='italic')
 
         # setup category frame & its grid
         self.cat_frame = ctk.CTkFrame(master=self,
                                       width=1220,
-                                      height=1*bt_size + 20,
+                                      height=1*bt_size + 40 + font.cget('size'),
                                       fg_color='#2A2A32')
         self.cat_frame.grid_rowconfigure(index=0,
-                                         weight=1)
+                                         weight=3)      # row for buttons
+        self.cat_frame.grid_rowconfigure(index=1,
+                                         weight=1)      # row for labels
         for col in range(len(App.categories)):
             self.cat_frame.grid_columnconfigure(index=col,
                                                 weight=1)
@@ -119,7 +125,7 @@ class App(ctk.CTk):
         self.cat_frame.grid_propagate(False)
 
 
-        # load images and their buttons
+        # load images, their buttons and labels
         for i, name in enumerate(App.categories):
             bt_path = 'static/icons/' + name + '_button.png'
             bt_img = ctk.CTkImage(Image.open(bt_path),
@@ -133,7 +139,15 @@ class App(ctk.CTk):
                                hover=False,
                                command=lambda category=i + 1:
                                self.load_next(category))
-            bt.grid(column=i, row=0)
+            bt.grid(column=i, row=0, pady=(5, 0))
+            bt_label = ctk.CTkLabel(master=self.cat_frame,
+                                    text=(name[0].upper() + name[1:]),
+                                    font=font,
+                                    text_color='#707070')
+            bt_label.grid(column=i, row=1, pady=(0, 5))
+
+
+
 
 
     def load_cat_indicator_imgs(self):
