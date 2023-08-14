@@ -7,8 +7,8 @@ from main import dispenser
 
 
 class App(ctk.CTk):
-    # todo: refactor frame loading
-    # todo: those should be instance vars
+    # TODO: refactor frame loading
+    # TODO: those should be instance vars
     current_frame = None
     frame = None
     date_label = None
@@ -17,7 +17,16 @@ class App(ctk.CTk):
     amount_label = None
     processed_labels = []
     indicator_imgs = []
-    categories = ['dance', 'groceries', 'eatout']
+    categories = ['eatout',
+                  'groceries',
+                  'leisure',
+                  'clothing',
+                  'shopping',
+                  'transport',
+                  'dance',
+                  'media',
+                  'misc',
+                  'rent']
 
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] =
@@ -83,10 +92,10 @@ class App(ctk.CTk):
 
 
     def bind_keyboard_shortcuts(self):
-        if len(App.categories) < 10: # with more the seq concat will break
+        if len(App.categories) < 11: # with more the seq concat will break
             for i in range(len(App.categories)):
-                seq = '<Key-' + str(i + 1) + '>'
-                self.bind(seq, lambda _, category=i + 1:
+                seq = '<Key-' + str((i + 1) % 10) + '>'
+                self.bind(seq, lambda _, category = i + 1:
                           self.load_next(category))
         else:
             raise NotImplementedError

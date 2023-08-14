@@ -9,7 +9,7 @@
    viewBox="0 0 26.763636 26.763636"
    sodipodi:docname="cat_indicator_template.svg"
    inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
-   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\eatout_cat_indicator.png"
+   inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\shopping_cat_indicator.png"
    inkscape:export-xdpi="192"
    inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -86,9 +86,9 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="37.992579"
-     inkscape:cx="3.7770534"
-     inkscape:cy="13.713204"
+     inkscape:zoom="19.161417"
+     inkscape:cx="-40.002261"
+     inkscape:cy="8.3501131"
      inkscape:window-width="3840"
      inkscape:window-height="2036"
      inkscape:window-x="-12"
@@ -102,7 +102,8 @@
      sodipodi:insensitive="true">
     <g
        id="g919"
-       inkscape:label="Colors">
+       inkscape:label="Colors"
+       style="display:inline">
       <circle
          style="display:inline;fill:#dc8b50;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
          id="path4164"
@@ -130,6 +131,56 @@
          cy="13.382"
          r="13.382"
          inkscape:label="red -- eating out"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:inline;fill:#c63be9;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle839"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="pink -- clothing"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:inline;fill:#841d61;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle859"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="burgundy -- shopping"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:none;fill:#f1dc17;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle1166"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="yellow -- media"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:none;fill:#c6cad7;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle1211"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="light grey -- rent"
+         inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
+      <circle
+         style="display:none;fill:#6d6d6d;fill-opacity:1;stroke:none;stroke-width:7.3189;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle1231"
+         cx="13.382"
+         cy="13.382"
+         r="13.382"
+         inkscape:label="light grey -- misc"
          inkscape:export-filename="C:\Users\micku\Projects\Expan\static\icons\groceries_category_indicator.png"
          inkscape:export-xdpi="192"
          inkscape:export-ydpi="192" />
