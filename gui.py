@@ -1,10 +1,11 @@
-from tkinter.font import ITALIC
 from typing import Optional, Tuple, Union
+
 
 import customtkinter as ctk
 from PIL import Image
 
 from main import dispenser
+from settings import DEBUG
 
 
 class App(ctk.CTk):
@@ -28,6 +29,7 @@ class App(ctk.CTk):
                   'media',
                   'misc',
                   'rent']
+    bt_size = 70
 
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] =
@@ -86,6 +88,21 @@ class App(ctk.CTk):
 
         self.load_progress_bar()
         self.load_category_buttons()
+
+        bt_path = 'static/icons/prev_button.png'
+        bt_img = ctk.CTkImage(Image.open(bt_path),
+                              size=(self.bt_size, self.bt_size))
+        prev_bt = ctk.CTkButton(master=self,
+                                image=bt_img,
+                                width=0,
+                                height=0,
+                                fg_color="transparent",
+                                text="",
+                                hover=False,
+                                command=self.load_prev)
+        prev_bt.pack(pady=(0, 25))
+
+
         self.load_cat_indicator_imgs()
 
         self.bind_keyboard_shortcuts()
@@ -94,6 +111,7 @@ class App(ctk.CTk):
 
 
     def bind_keyboard_shortcuts(self):
+        # bind category buttons
         if len(App.categories) < 11: # with more the seq concat will break
             for i in range(len(App.categories)):
                 seq = '<Key-' + str((i + 1) % 10) + '>'
@@ -102,16 +120,19 @@ class App(ctk.CTk):
         else:
             raise NotImplementedError
 
+        # bind prev button
+        self.bind('<Key-BackSpace>', lambda _:
+                  self.load_prev())
+
 
     def load_category_buttons(self):
-        bt_size = 70
         font = ctk.CTkFont()
         font.configure(slant='italic')
 
         # setup category frame & its grid
         self.cat_frame = ctk.CTkFrame(master=self,
                                       width=1220,
-                                      height=1*bt_size + 40 + font.cget('size'),
+                                      height=1*self.bt_size + 40 + font.cget('size'),
                                       fg_color='#2A2A32')
         self.cat_frame.grid_rowconfigure(index=0,
                                          weight=3)      # row for buttons
@@ -129,7 +150,7 @@ class App(ctk.CTk):
         for i, name in enumerate(App.categories):
             bt_path = 'static/icons/' + name + '_button.png'
             bt_img = ctk.CTkImage(Image.open(bt_path),
-                                     size=(bt_size, bt_size))
+                                     size=(self.bt_size, self.bt_size))
             bt = ctk.CTkButton(master=self.cat_frame,
                                image=bt_img,
                                width=0,
@@ -145,9 +166,6 @@ class App(ctk.CTk):
                                     font=font,
                                     text_color='#707070')
             bt_label.grid(column=i, row=1, pady=(0, 5))
-
-
-
 
 
     def load_cat_indicator_imgs(self):
@@ -182,6 +200,13 @@ class App(ctk.CTk):
             self.progress_bar.step()
 
 
+    def clear_last_assigned(self):
+        dispenser.clear_last_assigned()
+        # unstep the progress bar
+        self.progress_bar.set(self.progress_bar.get() -
+                              self.progress_bar.cget('determinate_speed') / 50)
+
+
     def load_last_processed(self):
         last = dispenser.get_last_processed()
 
@@ -210,14 +235,12 @@ class App(ctk.CTk):
             title_label.grid(row=this_row, column=2)
             amount_label.grid(row=this_row, column=3, padx=10)
             category_label.grid(row=this_row, column=4, padx=20)
-            
 
 
-        # for i, row in dispenser.get_processed().iterrows():
-        #     self.processed_labels.append(label)
-        #     print(i)
-        #     print(self.processed_labels)
-        #     self.processed_labels[i].grid(row=i, column=0)
+    def unload_last_processed(self):
+        _, row_num = self.frame.grid_size()
+        for label in self.frame.grid_slaves(row=row_num - 1):
+            label.destroy()
 
 
     def load_next(self, category = None):
@@ -226,17 +249,7 @@ class App(ctk.CTk):
         if dispenser.to_next():
             self.progress_label.configure(text=str(dispenser.current_index + 1) 
                                           + ' / ' + str(dispenser.length()))
-
-            row = dispenser.current()
-            self.date_label.configure(text=row['Data transakcji'])
-            self.receiver_label.configure(text=row['Dane kontrahenta'])
-            self.title_label.configure(text=row['Tytuł'])
-            self.amount_label.configure(text=row['Kwota'])
-
-            if row['Kwota'].startswith('-'):
-                self.amount_label.configure(text_color='red')
-            else:
-                self.amount_label.configure(text_color='green')
+            self.populate_current_row()
 
         else:
             self.date_label.configure(text='----')
@@ -247,16 +260,63 @@ class App(ctk.CTk):
 
             dispenser.save_processed()
             
-
-        self.date_label.grid(row=0, column=0)
-        self.receiver_label.grid(row=0, column=1)
-        self.title_label.grid(row=0, column=2)
-        self.amount_label.grid(row=0, column=3)
-
+        self.grid_current_row_labels() # FIX: is this gridded every time? should it?
+        
         self.load_last_processed()
 
         self.frame.update_idletasks()
         self.frame._parent_canvas.yview_moveto('1.0')
+
+        if DEBUG:
+            print('==========================================================================================================')
+            print(dispenser.processed)
+
+
+    def load_prev(self):
+        # clear the last category assigned
+        self.clear_last_assigned() 
+
+        if dispenser.to_prev():
+            # load previous to current frame
+            # update the processed frame
+            self.progress_label.configure(text=str(dispenser.current_index + 1) 
+                                          + ' / ' + str(dispenser.length()))
+            self.populate_current_row()
+        else:
+            raise NotImplementedError('No prev to go to')
+
+        self.unload_last_processed()
+
+        if DEBUG:
+            print('==========================================================================================================')
+            print(dispenser.processed)
+
+
+    def populate_current_row(self):
+        row = dispenser.current()
+        self.date_label.configure(text=row['Data transakcji'])
+        self.receiver_label.configure(text=row['Dane kontrahenta'])
+        self.title_label.configure(text=row['Tytuł'])
+        self.amount_label.configure(text=row['Kwota'])
+
+        if row['Kwota'].startswith('-'):
+            self.amount_label.configure(text_color='red')
+        else:
+            self.amount_label.configure(text_color='green')
+
+
+    def grid_current_row_labels(self):
+        if (self.date_label is not None and
+                self.receiver_label is not None and
+                self.title_label is not None and 
+                self.amount_label is not None):
+            self.date_label.grid(row=0, column=0)
+            self.receiver_label.grid(row=0, column=1)
+            self.title_label.grid(row=0, column=2)
+            self.amount_label.grid(row=0, column=3)
+        else:
+            raise TypeError('One of current row labels is None')
+
 
 
 app = App()

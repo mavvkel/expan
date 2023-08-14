@@ -66,8 +66,16 @@ class Dispenser:
 
 
     def to_next(self):
-        self.current_index += 1
-        if self.current_index >= 0 and self.current_index < len(self.df):
+        if self.current_index + 1 >= 0 and self.current_index + 1 < len(self.df):
+            self.current_index += 1
+            return True
+        else:
+            return False
+
+
+    def to_prev(self):
+        if self.current_index - 1 >= 0 and self.current_index - 1 < len(self.df):
+            self.current_index -= 1
             return True
         else:
             return False
@@ -80,6 +88,11 @@ class Dispenser:
             self.processed.append(current)
         else:
             raise ValueError('Assigning out of bounds')
+
+
+    def clear_last_assigned(self):
+        if len(self.processed) > 0:
+            self.processed.pop(self.current_index - 1)
 
 
     def current(self):
