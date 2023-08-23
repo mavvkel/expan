@@ -1,10 +1,10 @@
 from typing import Optional, Tuple, Union
 
-
 import customtkinter as ctk
 from PIL import Image
 
-from main import dispenser
+# todelet from main import dispenser
+from dispenser import Dispenser
 from settings import DEBUG
 
 
@@ -33,13 +33,14 @@ class App(ctk.CTk):
 
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] =
-                 None, **kwargs):
+                 None, dispenser: Optional[Dispenser] = None, **kwargs):
         super().__init__(fg_color, **kwargs)
         self.geometry(geometry_string="1300x1000+0+0")
         self.minsize(1220, 800)
         self.title(string="Expan")
         self.configure(fg_color='#34343D')
         
+        self.dispenser = dispenser
 
         # previous expenses frame
         self.frame = ctk.CTkScrollableFrame(master=self,
@@ -179,7 +180,7 @@ class App(ctk.CTk):
 
     def load_progress_bar(self):
         self.progress_label = ctk.CTkLabel(master=self,
-                                           text='0 / ' + str(dispenser.length()))
+                                           text='0 / ' + str(self.dispenser.length()))
         self.progress_label.pack(pady=(0, 5))
         self.progress_bar = ctk.CTkProgressBar(master=self,
                                                width=500,
@@ -188,7 +189,7 @@ class App(ctk.CTk):
                                                progress_color='#0E95F6',
                                                mode='determinate',
                                                determinate_speed=50.0 /
-                                               dispenser.length())
+                                               self.dispenser.length())
         self.progress_bar.set(0.0)
         self.progress_bar.pack(padx=25,
                                pady=25)
@@ -196,19 +197,19 @@ class App(ctk.CTk):
 
     def save_current(self, category):
         if category is not None:
-            dispenser.assign_current(category=category)
+            self.dispenser.assign_current(category=category)
             self.progress_bar.step()
 
 
     def clear_last_assigned(self):
-        dispenser.clear_last_assigned()
+        self.dispenser.clear_last_assigned()
         # unstep the progress bar
         self.progress_bar.set(self.progress_bar.get() -
                               self.progress_bar.cget('determinate_speed') / 50)
 
 
     def load_last_processed(self):
-        last = dispenser.get_last_processed()
+        last = self.dispenser.get_last_processed()
 
         if last is not None:
             date_label = ctk.CTkLabel(master=self.frame,
@@ -246,9 +247,9 @@ class App(ctk.CTk):
     def load_next(self, category = None):
         self.save_current(category)
 
-        if dispenser.to_next():
-            self.progress_label.configure(text=str(dispenser.current_index + 1) 
-                                          + ' / ' + str(dispenser.length()))
+        if self.dispenser.to_next():
+            self.progress_label.configure(text=str(self.dispenser.current_index + 1) 
+                                          + ' / ' + str(self.dispenser.length()))
             self.populate_current_row()
 
         else:
@@ -258,7 +259,7 @@ class App(ctk.CTk):
             self.amount_label.configure(text='----')
             self.amount_label.configure(text_color='white')
 
-            dispenser.save_processed()
+            self.dispenser.save_processed()
             
         self.grid_current_row_labels() # FIX: is this gridded every time? should it?
         
@@ -269,18 +270,18 @@ class App(ctk.CTk):
 
         if DEBUG:
             print('==========================================================================================================')
-            print(dispenser.processed)
+            print(self.dispenser.processed)
 
 
     def load_prev(self):
         # clear the last category assigned
         self.clear_last_assigned() 
 
-        if dispenser.to_prev():
+        if self.dispenser.to_prev():
             # load previous to current frame
             # update the processed frame
-            self.progress_label.configure(text=str(dispenser.current_index + 1) 
-                                          + ' / ' + str(dispenser.length()))
+            self.progress_label.configure(text=str(self.dispenser.current_index + 1) 
+                                          + ' / ' + str(self.dispenser.length()))
             self.populate_current_row()
         else:
             raise NotImplementedError('No prev to go to')
@@ -289,11 +290,11 @@ class App(ctk.CTk):
 
         if DEBUG:
             print('==========================================================================================================')
-            print(dispenser.processed)
+            print(self.dispenser.processed)
 
 
     def populate_current_row(self):
-        row = dispenser.current()
+        row = self.dispenser.current()
         self.date_label.configure(text=row['Data transakcji'])
         self.receiver_label.configure(text=row['Dane kontrahenta'])
         self.title_label.configure(text=row['Tytuł'])
@@ -317,8 +318,4 @@ class App(ctk.CTk):
         else:
             raise TypeError('One of current row labels is None')
 
-
-
-app = App()
-app.mainloop()
 
